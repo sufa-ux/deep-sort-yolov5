@@ -29,8 +29,8 @@ and place `ckpt.t7` file under `deep_sort/deep/checkpoint/`
 
 ## Run
 ~~~
-# on video file
-python app.py
+# on per file
+python test.py
 ~~~
 
 
