@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>行人检测系统{% block title %} {%endblock%}</title>
+<style>
+.navbar a:hover{
+    color: rgb(85, 85, 228)!important;
+  }
+</style>
+<link rel="stylesheet" href="{{url_for('static',filename='bootstrap-4.6.2/css/bootstrap.min.css')}}">
+<link rel="icon" href="{{url_for('static',filename='images/logos.ico')}}">
+</head>
+
+<body>
+     
+{% block content %}
+    <div>
+        内容区
+    </div>
+{%endblock%}
+
+</body>
+
+<script src="{{url_for('static',filename='bootstrap-4.6.2/js/jquery.js')}}"></script>
+<script src="{{url_for('static',filename='bootstrap-4.6.2/js/bootstrap.min.js')}}"></script>
+</html>

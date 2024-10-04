@@ -2,6 +2,7 @@ from yolov5.utils.general import (
     check_img_size, non_max_suppression, scale_coords, xyxy2xywh)
 from yolov5.utils.torch_utils import select_device, time_synchronized
 from yolov5.utils.datasets import letterbox
+from PIL import Image, ImageDraw, ImageFont
 
 from utils_ds.parser import get_config
 from utils_ds.draw import draw_boxes
@@ -222,22 +223,35 @@ class VideoTracker(object):
 
         t3 = time.time()
         return outputs, t2-t1, t3-t2
-    # def test(self):
-    #     while True:
-    #         _, im = self.vdo.read()
-    #         if im is None:
-    #             break
-    #         outputs, yt, st = self.image_track(im)
-    #         if len(outputs) > 0:
-    #             num=len(outputs)
-    #             bbox_xyxy = outputs[:, :4]
-    #             identities = outputs[:, -1]
-    #             img=draw_boxes(im,bbox_xyxy,identities)
-    #             cv2.imshow('kk',img)
-    #             cv2.waitKey(1)
-    #         else:
-    #             cv2.imshow('kk',im)
-    #             cv2.waitKey(1)
+    def cv2AddChineseText(img, text, position, textColor=(255, 0, 0), textSize=15):
+        if (isinstance(img, np.ndarray)):  # 判断是否OpenCV图片类型
+            img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        # 创建一个可以在给定图像上绘图的对象
+        draw = ImageDraw.Draw(img)
+        # 字体的格式
+        fontStyle = ImageFont.truetype(
+            "simsun.ttc", textSize, encoding="utf-8")
+        # 绘制文本
+        draw.text(position, text, textColor, font=fontStyle)
+        # 转换回OpenCV格式
+        return cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
+    def generate_frames(self):
+        while True:
+            success, frame = self.camera.read()
+            if not success:
+                break
+            else:
+                outputs, yt, st = self.image_track(frame)
+                if len(outputs) > 0:
+                    bbox_xyxy = outputs[:, :4]
+                    identities = outputs[:, -1]
+                    people=len(outputs)
+                    img=draw_boxes(frame,bbox_xyxy,identities)
+                    img=self.cv2AddChineseText(img,f"当前的人流量：{people}",(5,50))
+                    ret, buffer = cv2.imencode('.jpg', img)
+                    frame = buffer.tobytes()
+                    yield (b'--frame\r\n'
+                        b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
                 
 
 

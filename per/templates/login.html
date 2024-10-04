@@ -1,0 +1,35 @@
+{% extends "pedestrianbase.html" %}
+{% block title %}登录{%endblock%}
+
+{% block nav %}
+<nav class="navbar navbar-expand-lg navbar-light">
+  <a class="ml-5 navbar-brand" href="#">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" style="height:40px"/>
+  </a>
+</nav>
+{%endblock%}
+{% block content %}
+<body style="background-image: url('https://t7.baidu.com/it/u=2221779800,1748267195&fm=193&f=GIF');background-repeat: no-repeat; background-size: cover;"> 
+  <div class="mx-auto p-5 border-warning bg-warning my-5" style="width:30%; ">
+      <h2 class="text-center ">用户登录</h2>
+      <form action="" method=post>
+          <div class="form-group">
+            <label for="username">用户名</label>
+            <input type="text" class="form-control" id="username" placeholder="请输入用户名：" name=username >
+          </div>
+          <div class="form-group">
+            <label for="password">密码</label>
+            <input type="password" class="form-control" id="password" placeholder="请输入密码：" name=pwd>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">登录</button>
+          <a href="{{ url_for('register') }}" class="btn btn-primary btn-block custom-register-btn">注册</a>
+      </form>
+      <div>
+         {%for mes in get_flashed_messages() %}
+        <p>{{mes}}</p>
+        {% endfor %}
+      </div>
+  </div>
+</body>
+
+{%endblock%}

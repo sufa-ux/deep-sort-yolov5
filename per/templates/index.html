@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+</head>
+<style>
+body{
+    background-color:#FFFFFF;
+   }
+.loginBgColor{
+        margin-top: 30px;
+    }
+.top{width:100%;
+     height:100px;
+     text-align:center;
+     background-color: #9695ed;
+  }
+.top .logo{
+    margin-top: 25px;
+    float: left;
+    margin-left: 200px;
+
+ }
+#headertop{
+    float:right;
+    margin-top: 25px;}
+#headertop .nav nav-tabs,
+
+    header{
+        width:100%;
+        height:50px;
+        text-align:center;
+        font-size:25px;
+        background:#aadfea;
+    }
+
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .first,.third{
+        width: 220px;
+        height: 600px;
+        background-color:#F5F5F5;
+        text-align:center;
+        margin:0 25px 0 25px;
+
+    }
+    .first{
+        float: left;
+    }
+    .third{
+        float: right;
+
+    }
+    .third,.text{
+        text-align:left;
+        margin-left:5px;
+    }
+    .second{
+        background-color: white;
+        /* margin: 0 auto; */
+        width: calc(100%-600px);
+        height: 600px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: justify;
+        background-color:#f3f6fc
+
+    }
+    second .submit{
+        width:300px;
+        height:30px;
+        margin-top:10px;
+        background-color: lightcoral;
+        float:left;
+    }
+    .bottom5 {
+            min-width: 1356px;
+            height: 80px;
+            background-color: #171e2e;
+        }
+
+    .bottom5 .wrap {
+            width: 1356px;
+            margin: 0 auto;
+            height: 80px;
+        }
+
+   .bottom5 .wrap p {
+            height: 20px;
+            line-height: 20px;
+            font-size: 14px;
+            color: #fff;
+            margin-top: 30px;
+            float: left;
+   }
+   .border_style,.border_style1,.border_style2{
+        border:2px solid #000;
+        width:150px;
+        height:80px;
+        text-align:center;
+        margin:0 auto;
+        margin-top:20px;
+    }
+    .nav-tabs .nav-link {  
+    color: white; 
+    text-decoration: none;  }  
+  
+    .nav-tabs .nav-link:hover {  
+        color: #f0f0f0;
+    }  
+    
+    .nav-tabs .nav-link.active {  
+        color: #ffffff; 
+        font-weight: bold;}
+
+</style>
+<link rel="icon" href="{{url_for('static',filename='images/logos.ico')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='bootstrap-4.6.2/css/bootstrap.min.css')}}">
+<body>
+<div class="top">
+    <div class="logo">
+        <img src="static/images/logo.jpg" alt="" width="300px" height="60px">
+    </div>
+    <div id="headertop">
+        <ul class="nav nav-tabs">
+            <li><a href="{{url_for('video')}}" class="nav-link">视频识别</a></li>
+            <li><a href="{{url_for('login')}}" class="nav-link">登录</a></li>
+            <li><a href="{{url_for('register')}}" class="nav-link">注册</a></li>
+        </ul>
+    </div>
+
+</div>
+
+
+<div class="loginBgColor">
+        <div class="first">
+            <a href="{{url_for('show_video')}}">摄像头检测</a>
+
+
+        </div>   
+</div>
+    <div class="third"><br>  
+              <ul>
+                  <div id="border_style" style="font-size:15px; font-weight:20px;">
+                      <script>
+        let time = new Date();
+        setInterval(() => {
+            time = new Date();
+            document.getElementById('border_style').innerHTML = `北京时间：${time.toLocaleDateString()} ${time.toLocaleTimeString()}`; // 转化后的时间：2020/4/22 下午6:54:25
+        }, 1000)
+        document.getElementById('border_style').innerHTML = `北京时间：${time.toLocaleDateString()} ${time.toLocaleTimeString()}`
+    </script>
+                  </div><br><br><br>
+                <text>共检测到人数</text>
+                  <div class="border_style">
+                      {% if o %}
+                        <h2>{{o}}</h2>
+                      {% endif %}
+                  </div><br><br><br>
+                  <br><br><br>
+            </ul>
+        </div>
+    
+        <div class="second">
+            {% block second %}
+            <div class="submit">
+            <form class="form-horizontal" action="/" method="post" enctype="multipart/form-data">
+                <div class="col-sm-10">
+                    <input type="file" class="form-control" name="file" id="pwd">
+                    <button type="submit" class="btn btn-success">确认上传</button>
+                </div>
+            </form>
+            <!-- 修改过这里 -->
+                {% if img_path %}
+                <img src="{{ img_path }}" height="100px" width="100px">
+                {% endif %}
+    
+             {% if save_path %}
+    
+                <img src="{{ save_path }}" height="400px" width="400px">
+    
+            {% endif %}
+            </div>
+            {%  endblock %}
+        </div>
+    
+</div>
+
+<footer>
+    </div>
+       <div class="bottom5">
+           <div class="wrap">
+               <p style="margin-left: 422px;">Copyright &copy; 2022-2025 行人检测.ALL Rights Reserverd</p>
+               <p style="margin-left: 30px;">京ICP备15045098号</p>
+           </div>
+       </div>
+    </div>
+</footer>
+</body>
+<script src="{{url_for('static',filename='bootstrap-4.6.2/js/jquery.js')}}"></script>
+<script src="{{url_for('static',filename='bootstrap-4.6.2/js/bootstrap.min.js')}}"></script>
+</html>
